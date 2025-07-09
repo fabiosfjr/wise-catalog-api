@@ -7,10 +7,12 @@ import com.first.wisecatalogapi.infrastructure.databse.LivroJpaRepository;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 @Service
 public class ImportarLivrosService implements ImportarLivrosCsvUseCase {
@@ -22,8 +24,8 @@ public class ImportarLivrosService implements ImportarLivrosCsvUseCase {
     }
 
     @Override
-    public void importarLivrosCsv(String caminhoArquivoCsv) throws FileNotFoundException {
-        try (CSVReader reader = new CSVReader(new FileReader(caminhoArquivoCsv))) {
+    public void importarLivrosCsv(MultipartFile arquivo) {
+        try (var reader = new CSVReader(new InputStreamReader(arquivo.getInputStream()))) {
             String[] linha;
             reader.readNext();
             while ((linha = reader.readNext()) != null) {

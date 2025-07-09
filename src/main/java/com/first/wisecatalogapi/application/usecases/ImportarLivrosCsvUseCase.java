@@ -1,7 +1,7 @@
 package com.first.wisecatalogapi.application.usecases;
 
-import java.io.FileNotFoundException;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface ImportarLivrosCsvUseCase {
-    void importarLivrosCsv(String caminhoArquivoCsv) throws FileNotFoundException;
+    void importarLivrosCsv(MultipartFile file);
 }

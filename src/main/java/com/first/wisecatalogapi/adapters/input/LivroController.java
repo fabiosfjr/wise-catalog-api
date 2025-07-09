@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.FileNotFoundException;
 import java.util.List;
@@ -72,9 +73,9 @@ public class LivroController {
         return ResponseEntity.ok(livros);
     }
 
-    @PostMapping("/import")
-    public ResponseEntity<String> importarLivrosCsv(@RequestParam String caminhoArquivoCsv) throws FileNotFoundException {
-        importarLivrosCsvUseCase.importarLivrosCsv(caminhoArquivoCsv);
+    @PostMapping(value = "/import", consumes = "multipart/form-data")
+    public ResponseEntity<String> importarLivrosCsv(@RequestParam("arquivo") MultipartFile arquivo) {
+        importarLivrosCsvUseCase.importarLivrosCsv(arquivo);
         return ResponseEntity.ok("Importação concluída com sucesso!");
     }
 }
