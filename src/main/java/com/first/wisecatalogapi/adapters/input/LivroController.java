@@ -10,12 +10,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.FileNotFoundException;
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/books")
-public class LivroController {
+public class LivroController implements LivroControllerSwagger {
 
     private final ImportarLivrosCsvUseCase importarLivrosCsvUseCase;
     private final BuscarLivroUseCase buscarLivroUseCase;
@@ -51,14 +50,14 @@ public class LivroController {
     }
 
     @GetMapping("/author/{author}")
-    public ResponseEntity<List<LivroDTO>> buscarLivroPorAutor(@PathVariable String autor) {
-        var livros = buscarLivroUseCase.buscarPorAutor(autor);
+    public ResponseEntity<List<LivroDTO>> buscarLivroPorAutor(@PathVariable String author) {
+        var livros = buscarLivroUseCase.buscarPorAutor(author);
         return ResponseEntity.ok(livros);
     }
 
     @GetMapping("/genre/{genre}")
-    public ResponseEntity<List<LivroDTO>> buscarLivroPorGenero(@PathVariable String genero) {
-        var livros = buscarLivroUseCase.buscarPorGenero(genero);
+    public ResponseEntity<List<LivroDTO>> buscarLivroPorGenero(@PathVariable String genre) {
+        var livros = buscarLivroUseCase.buscarPorGenero(genre);
         return ResponseEntity.ok(livros);
     }
 

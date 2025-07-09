@@ -5,6 +5,8 @@ public record LivroDTO(
         String titulo,
         String autor,
         String genero,
+        String subGenero,
+        String tipo,
         Double preco,
         Double avaliacao,
         Integer numeroAvaliacoes,
