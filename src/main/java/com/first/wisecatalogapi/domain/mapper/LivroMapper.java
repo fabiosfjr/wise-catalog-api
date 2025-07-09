@@ -7,5 +7,4 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface LivroMapper {
     LivroDTO toDTO(LivroEntity entity);
-    LivroEntity toEntity(LivroDTO dto);
 }

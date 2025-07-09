@@ -1,7 +1,8 @@
 package com.first.wisecatalogapi.application.services;
 
-import com.first.wisecatalogapi.application.usecases.ImportarLivrosCSVUseCase;
+import com.first.wisecatalogapi.application.usecases.ImportarLivrosCsvUseCase;
 import com.first.wisecatalogapi.domain.entities.LivroEntity;
+import com.first.wisecatalogapi.domain.exceptions.ErroImportacaoCsvException;
 import com.first.wisecatalogapi.infrastructure.databse.LivroJpaRepository;
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvValidationException;
@@ -12,7 +13,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 @Service
-public class ImportarLivrosService implements ImportarLivrosCSVUseCase {
+public class ImportarLivrosService implements ImportarLivrosCsvUseCase {
 
     private final LivroJpaRepository livroJpaRepository;
 
@@ -24,7 +25,7 @@ public class ImportarLivrosService implements ImportarLivrosCSVUseCase {
     public void importarLivrosCsv(String caminhoArquivoCsv) throws FileNotFoundException {
         try (CSVReader reader = new CSVReader(new FileReader(caminhoArquivoCsv))) {
             String[] linha;
-            reader.readNext(); // Ignorar cabeçalho
+            reader.readNext();
             while ((linha = reader.readNext()) != null) {
                 var livro = new LivroEntity();
                 livro.setId(Long.parseLong(linha[0]));
@@ -39,8 +40,8 @@ public class ImportarLivrosService implements ImportarLivrosCSVUseCase {
                 livro.setUrl(linha[9]);
                 livroJpaRepository.save(livro);
             }
-        } catch (IOException | CsvValidationException e) {
-            throw new RuntimeException(e);
+        } catch (IOException | CsvValidationException exception) {
+            throw new ErroImportacaoCsvException("Erro ao importar o arquivo CSV", exception);
         }
     }
 }

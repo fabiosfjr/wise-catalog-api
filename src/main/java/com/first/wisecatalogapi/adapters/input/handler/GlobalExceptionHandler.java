@@ -41,7 +41,7 @@ public class GlobalExceptionHandler {
 
         return Map.of(
                 "mensagem", mensagem,
-                "timestamp", dataFormatada
+                "dataHora", dataFormatada
         );
     }
 }

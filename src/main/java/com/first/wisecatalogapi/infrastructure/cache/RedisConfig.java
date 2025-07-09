@@ -53,4 +53,13 @@ public class RedisConfig {
                 .cacheDefaults(config)
                 .build();
     }
+
+    @Bean
+    public RedisTemplate<String, Long> redisTemplateLong(RedisConnectionFactory connectionFactory) {
+        RedisTemplate<String, Long> template = new RedisTemplate<>();
+        template.setConnectionFactory(connectionFactory);
+        template.setKeySerializer(new StringRedisSerializer());
+        template.setValueSerializer(new org.springframework.data.redis.serializer.GenericToStringSerializer<>(Long.class));
+        return template;
+    }
 }
