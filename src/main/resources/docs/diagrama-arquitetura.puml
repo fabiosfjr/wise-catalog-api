@@ -1,0 +1,17 @@
+@startuml
+!includeurl https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+title Wise Catalog API
+
+Person(usuario, "Usuário", "Pessoa que interage com o sistema via frontend ou ferramentas REST")
+
+System_Boundary(backend, "Wise Catalog API") {
+    Container(api, "Catálogo de Livros", "Spring Boot 3 - Java 17", "Gerencia livros, visualizações e importações")
+    ContainerDb(banco, "Banco de Dados", "PostgreSQL 15", "Armazena dados dos livros")
+    Container(redis, "Cache Redis", "Redis", "Armazena visualizações recentes por sessão")
+}
+
+Rel(usuario, api, "Interage via HTTP")
+Rel(api, banco, "Consulta e persiste dados de livros")
+Rel(api, redis, "Armazena visualizações de livros")
+@enduml
